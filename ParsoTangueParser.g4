@@ -13,49 +13,77 @@ program
     ;
 
 func
-    : let emptyParens body
+    : LET identifier iniFuncParens body
     ;
 
 stmt
     : ifStmt
+    | printStmt SEMICOLON
+    | assignStmt SEMICOLON
+    | returnStmt SEMICOLON
+    ;
+
+expr
+    : booleanExpr
+    | arithExpr
+    | funcExpr
+    | primitives
+    | NAME
     ;
 
 ifStmt
-    : IF OPEN_PARENS booleanStmt CLOSE_PARENS body   // TODO: or function that returns boolean
-    | ELSEIF booleanStmt
-    | ELSE
+    : IF ifParens body (ELSEIF ifParens body)* (ELSE body)?
     ;
 
-booleanStmt
-    : number comp number
+printStmt
+    : PRINT callFuncParens
     ;
 
-arith
-    : number
-    | number MINUS number
+assignStmt
+    : identifier ASSIGNMENT (expr | NAME | primitives)
     ;
 
-comp
-    : LEQ
-    | GEQ
-    | LE
-    | GE
-    | EQ
-    | NEQ
+returnStmt
+    : RETURN (expr | NAME | primitives);
+
+booleanExpr
+    : (arithExpr | funcExpr | primitives | NAME) (LEQ | GEQ | LE | GE | EQ | NEQ) expr
+    ;
+
+arithExpr
+    : (NUMBER | NAME | STR) PLUS (NUMBER | NAME | STR)      // TODO: str in arith exp?
+    | (NUMBER | NAME) MULT (NUMBER | NAME)
+    ;
+
+funcExpr
+    : NAME callFuncParens
     ;
 
 body
-    : OPEN_CURLY NEW_LINE (stmt NEW_LINE)* CLOSE_CURLY
+    : OPEN_CURLY stmt* CLOSE_CURLY
     ;
 
-let
-    : LET
+identifier
+    : type? NAME
     ;
 
-emptyParens
-    : OPEN_PARENS CLOSE_PARENS
+type
+    : (INTEGER | BOOLEAN | STRING | VOID)
     ;
 
-number
-    : NUMBER
+primitives
+    : (NUMBER | STR | TRUE | FALSE)
     ;
+
+callFuncParens
+    : OPEN_PARENS ((expr | NAME | primitives) COMMA?)* CLOSE_PARENS  // TODO: delete comma only after the last argument
+    ;
+
+iniFuncParens
+    : OPEN_PARENS (identifier COMMA?)* CLOSE_PARENS     // TODO: delete comma only after the last argument
+    ;
+
+ifParens
+    : OPEN_PARENS (booleanExpr | NAME callFuncParens) CLOSE_PARENS
+    ;
+

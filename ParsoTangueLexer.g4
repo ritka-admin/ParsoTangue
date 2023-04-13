@@ -9,7 +9,6 @@ MINUS: '-';
 MULT: '*';
 DIV: '/';
 MOD: '%';
-// TODO: priorities?
 
 TRUE: 'true';
 FALSE: 'false';
@@ -30,14 +29,27 @@ CLOSE_PARENS: ')';
 OPEN_CURLY: '{';
 CLOSE_CURLY: '}';
 
+ASSIGNMENT: ':=';
+SEMICOLON: ';';
+COMMA: ',';
+
 LET: 'let';
+PRINT: 'print';
+RETURN: 'return';
 
-// TODO: types, names
-
-NEW_LINE: '\n';
-TAB: '\t';
-
-WHITESPACE : ' ' -> skip;       // TODO: identation, new line rules
+INTEGER: 'Integer';
+BOOLEAN: 'Boolean';
+STRING: 'String';
+VOID: 'void';
 
 fragment DIGIT:      [0-9];
 NUMBER:     [1-9] DIGIT* | DIGIT;
+
+fragment LETTER: [a-zA-Z];
+fragment MARK: [!, ?];
+NAME: ('_' | LETTER)+;
+STR: '"' (LETTER | DIGIT | MARK)* '"';      // TODO: something except for question and exl marks
+
+fragment NEW_LINE:    '\n';
+fragment WHITE_SPACE: [ \t];
+SPACE:   (WHITE_SPACE | NEW_LINE)+ -> skip;
