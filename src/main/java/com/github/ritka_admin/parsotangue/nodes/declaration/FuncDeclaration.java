@@ -9,11 +9,11 @@ import java.util.List;
 
 public class FuncDeclaration implements AstNode {
     public final Type returnType;
-    public final Identifier name;
+    public final String name;
     public final List<ParameterDeclaration> args;
     public final List<Stmt> stmts;
 
-    public FuncDeclaration(Type returnType, Identifier name, List<ParameterDeclaration> args, List<Stmt> stmts) {
+    public FuncDeclaration(Type returnType, String name, List<ParameterDeclaration> args, List<Stmt> stmts) {
         this.returnType = returnType;
         this.name = name;
         this.args = args;
