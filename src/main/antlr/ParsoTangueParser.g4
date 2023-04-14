@@ -13,7 +13,7 @@ program
     ;
 
 func
-    : LET identifier iniFuncParens body
+    : LET type identifier iniFuncParens body
     ;
 
 stmt
@@ -22,6 +22,8 @@ stmt
     | assignStmt SEMICOLON
     | returnStmt SEMICOLON
     ;
+
+// TODO: declaration?
 
 expr
     : booleanExpr
@@ -32,7 +34,7 @@ expr
     ;
 
 ifStmt
-    : IF ifParens body (ELSEIF ifParens body)* (ELSE body)?
+    : IF ifParens body (ELSEIF ifParens body)* (ELSE body)?  // TODO: ifParens and other parens?
     ;
 
 printStmt
@@ -40,18 +42,19 @@ printStmt
     ;
 
 assignStmt
-    : identifier ASSIGNMENT (expr | NAME | primitives)
+    : type identifier ASSIGNMENT expr  // TODO: change identifier
     ;
 
 returnStmt
-    : RETURN (expr | NAME | primitives);
+    : RETURN expr
+    ;
 
 booleanExpr
     : (arithExpr | funcExpr | primitives | NAME) (LEQ | GEQ | LE | GE | EQ | NEQ) expr
     ;
 
 arithExpr
-    : (NUMBER | NAME | STR) PLUS (NUMBER | NAME | STR)      // TODO: str in arith exp?
+    : (NUMBER | NAME | STR) PLUS (NUMBER | NAME | STR | arithExpr)      // TODO: str in arith exp?
     | (NUMBER | NAME) MULT (NUMBER | NAME)
     ;
 
@@ -64,7 +67,7 @@ body
     ;
 
 identifier
-    : type? NAME
+    : NAME
     ;
 
 type
@@ -76,11 +79,11 @@ primitives
     ;
 
 callFuncParens
-    : OPEN_PARENS ((expr | NAME | primitives) COMMA?)* CLOSE_PARENS  // TODO: delete comma only after the last argument
+    : OPEN_PARENS (expr COMMA?)* CLOSE_PARENS  // TODO: delete comma only after the last argument
     ;
 
 iniFuncParens
-    : OPEN_PARENS (identifier COMMA?)* CLOSE_PARENS     // TODO: delete comma only after the last argument
+    : OPEN_PARENS (type identifier COMMA?)* CLOSE_PARENS     // TODO: delete comma only after the last argument
     ;
 
 ifParens

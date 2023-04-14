@@ -46,7 +46,7 @@ fragment DIGIT:      [0-9];
 NUMBER:     [1-9] DIGIT* | DIGIT;
 
 fragment LETTER: [a-zA-Z];
-fragment MARK: [!, ?];
+fragment MARK: [!,?.)(];
 NAME: ('_' | LETTER)+;
 STR: '"' (LETTER | DIGIT | MARK)* '"';      // TODO: something except for question and exl marks
 
