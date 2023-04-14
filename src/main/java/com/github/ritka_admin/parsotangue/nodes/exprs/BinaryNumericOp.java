@@ -1,4 +1,4 @@
-package com.github.ritka_admin.parsotangue.nodes.ops;
+package com.github.ritka_admin.parsotangue.nodes.exprs;
 
 
 public enum BinaryNumericOp {
@@ -7,6 +7,7 @@ public enum BinaryNumericOp {
     MOD("%");
 
     private final String op;
+
     BinaryNumericOp(String op) {
         this.op = op;
     }

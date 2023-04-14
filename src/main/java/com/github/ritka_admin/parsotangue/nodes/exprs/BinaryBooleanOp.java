@@ -1,4 +1,4 @@
-package com.github.ritka_admin.parsotangue.nodes.ops;
+package com.github.ritka_admin.parsotangue.nodes.exprs;
 
 public enum BinaryBooleanOp {
     LEQ("<="), GEQ(">="),

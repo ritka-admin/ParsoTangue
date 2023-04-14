@@ -4,9 +4,9 @@ public enum Type {
     INTEGER("Integer"), BOOLEAN("Boolean"),
     STRING("String"), VOID("void");
 
-    private final String type;
+    public final String type;
 
-    private Type(String type) {
+    Type(String type) {
         this.type = type;
     }
 }
