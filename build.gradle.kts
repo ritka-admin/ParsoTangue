@@ -1,7 +1,6 @@
 plugins {
     id("java")
     antlr
-    application
 }
 
 group = "com.github.ritka_admin.parsotangue"
@@ -13,12 +12,9 @@ repositories {
 
 dependencies {
     antlr("org.antlr:antlr4:4.10.1")
+    implementation("com.google.guava:guava:31.1-jre")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-application {
-    mainClass.set("com.github.ritka_admin.parsotangue.Main")
 }
 
 tasks.withType<JavaExec>().all {

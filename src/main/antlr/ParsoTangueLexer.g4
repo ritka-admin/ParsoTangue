@@ -1,7 +1,7 @@
 lexer grammar ParsoTangueLexer;
 
 @header {
-    package com.github.ritka_admin.parsotangue;
+    package com.github.ritka_admin.parsotangue.antlr;
 }
 
 PLUS:  '+';
@@ -47,7 +47,7 @@ NUMBER:     [1-9] DIGIT* | DIGIT;
 fragment LETTER: [a-zA-Z];
 fragment INPUT_CHARACTER: ~[\r\n\u0085\u2028\u2029];
 NAME: ('_' | LETTER)+;
-STR: '"' INPUT_CHARACTER* '"';      // TODO: something except for question and exl marks
+STR: '"' INPUT_CHARACTER* '"';
 
 fragment NEW_LINE:    '\n';
 fragment WHITE_SPACE: [ \t];

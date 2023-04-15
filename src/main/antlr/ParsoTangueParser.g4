@@ -1,7 +1,7 @@
 parser grammar ParsoTangueParser;
 
 @header {
-    package com.github.ritka_admin.parsotangue;
+    package com.github.ritka_admin.parsotangue.antlr;
 }
 
 options {
@@ -25,7 +25,7 @@ stmt
     | initializerStmt SEMICOLON
     | assignmentStmt SEMICOLON
     | returnStmt SEMICOLON
-    | expr SEMICOLON
+    | funcExpr SEMICOLON
     ;
 
 expr
