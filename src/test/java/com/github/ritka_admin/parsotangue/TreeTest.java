@@ -16,13 +16,6 @@ import java.util.List;
 class TreeTest {
 
     @Test
-    void treeTest() {
-        var a = new NumberLiteral(5);
-        var b = new NumberLiteral(6);
-        var boolExpr = new BooleanExpr(BinaryBooleanOp.EQ, a, b);
-    }
-
-    @Test
     void listingOneTest() {
         var stmt1 = new InitializerStmt(Type.INTEGER, "a", new NumberLiteral(42));
         var stmt2 = new InitializerStmt(Type.INTEGER, "b", new NumberLiteral(42));

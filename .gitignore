@@ -1,4 +1,5 @@
-gen/**
+**/gen/**
+*.tokens
 
 .gradle
 build/

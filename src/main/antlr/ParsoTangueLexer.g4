@@ -1,7 +1,7 @@
 lexer grammar ParsoTangueLexer;
 
 @header {
-package ru.itmo.test.parsoTangue;
+    package com.github.ritka_admin.parsotangue;
 }
 
 PLUS:  '+';
@@ -15,7 +15,7 @@ FALSE: 'false';
 
 LEQ: '<=';
 GEQ: '>=';
-LE: '<';
+LT: '<';
 GE: '>';
 EQ: '==';
 NEQ: '!=';
@@ -26,15 +26,14 @@ ELSE: 'else';
 
 OPEN_PARENS: '(';
 CLOSE_PARENS: ')';
-OPEN_CURLY: '{';
-CLOSE_CURLY: '}';
+OPEN_BRACE: '{';
+CLOSE_BRACE: '}';
 
 ASSIGNMENT: ':=';
 SEMICOLON: ';';
 COMMA: ',';
 
 LET: 'let';
-PRINT: 'print';
 RETURN: 'return';
 
 INTEGER: 'Integer';
@@ -46,9 +45,9 @@ fragment DIGIT:      [0-9];
 NUMBER:     [1-9] DIGIT* | DIGIT;
 
 fragment LETTER: [a-zA-Z];
-fragment MARK: [!,?.)(];
+fragment INPUT_CHARACTER: ~[\r\n\u0085\u2028\u2029];
 NAME: ('_' | LETTER)+;
-STR: '"' (LETTER | DIGIT | MARK)* '"';      // TODO: something except for question and exl marks
+STR: '"' INPUT_CHARACTER* '"';      // TODO: something except for question and exl marks
 
 fragment NEW_LINE:    '\n';
 fragment WHITE_SPACE: [ \t];

@@ -1,7 +1,7 @@
 parser grammar ParsoTangueParser;
 
 @header {
-package ru.itmo.test.parsoTangue;
+    package com.github.ritka_admin.parsotangue;
 }
 
 options {
@@ -16,54 +16,62 @@ func
     : LET type identifier iniFuncParens body
     ;
 
-stmt
-    : ifStmt
-    | printStmt SEMICOLON
-    | assignStmt SEMICOLON
-    | returnStmt SEMICOLON
+iniFuncParens
+    : OPEN_PARENS ((type identifier)? | type identifier (COMMA type identifier)+) CLOSE_PARENS
     ;
 
-// TODO: declaration?
+stmt
+    : ifStmt
+    | initializerStmt SEMICOLON
+    | assignmentStmt SEMICOLON
+    | returnStmt SEMICOLON
+    | expr SEMICOLON
+    ;
 
 expr
-    : booleanExpr
-    | arithExpr
+    : expr (LEQ | GEQ | LT | GE | EQ | NEQ) expr
+    | <assoc=left> expr (DIV | MULT | MOD) expr
+    | <assoc=left> expr (PLUS | MINUS) expr
     | funcExpr
-    | primitives
-    | NAME
+    | atom
     ;
 
 ifStmt
-    : IF ifParens body (ELSEIF ifParens body)* (ELSE body)?  // TODO: ifParens and other parens?
+    : IF ifParens body (ELSEIF ifParens body)* (ELSE body)?
     ;
 
-printStmt
-    : PRINT callFuncParens
+ifParens
+    : OPEN_PARENS expr CLOSE_PARENS
     ;
 
-assignStmt
-    : type identifier ASSIGNMENT expr  // TODO: change identifier
+initializerStmt
+    : type identifier ASSIGNMENT expr
+    ;
+
+assignmentStmt
+    : identifier ASSIGNMENT expr
     ;
 
 returnStmt
     : RETURN expr
     ;
 
-booleanExpr
-    : (arithExpr | funcExpr | primitives | NAME) (LEQ | GEQ | LE | GE | EQ | NEQ) expr
-    ;
-
-arithExpr
-    : (NUMBER | NAME | STR) PLUS (NUMBER | NAME | STR | arithExpr)      // TODO: str in arith exp?
-    | (NUMBER | NAME) MULT (NUMBER | NAME)
-    ;
-
 funcExpr
     : NAME callFuncParens
     ;
 
+callFuncParens
+    : OPEN_PARENS ((expr)? | expr (COMMA expr)+) CLOSE_PARENS
+    ;
+
+atom
+    : primitives
+    | identifier
+    | OPEN_PARENS expr CLOSE_PARENS
+    ;
+
 body
-    : OPEN_CURLY stmt* CLOSE_CURLY
+    : OPEN_BRACE stmt* CLOSE_BRACE
     ;
 
 identifier
@@ -78,15 +86,4 @@ primitives
     : (NUMBER | STR | TRUE | FALSE)
     ;
 
-callFuncParens
-    : OPEN_PARENS (expr COMMA?)* CLOSE_PARENS  // TODO: delete comma only after the last argument
-    ;
-
-iniFuncParens
-    : OPEN_PARENS (type identifier COMMA?)* CLOSE_PARENS     // TODO: delete comma only after the last argument
-    ;
-
-ifParens
-    : OPEN_PARENS (booleanExpr | NAME callFuncParens) CLOSE_PARENS
-    ;
 
